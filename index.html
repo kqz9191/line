@@ -10,14 +10,13 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            /* Old browsers */
             background: url("akasa.png") no-repeat center center fixed;
             -webkit-background-size: cover;
             -moz-background-size: cover;
             -o-background-size: cover;
-            background-size: cover; /* Modern browsers */
+            background-size: cover;
             font-family: 'Arial', sans-serif;
-            color: white; /*  Установили белый цвет текста для всего body */
+            color: white;
         }
         .container {
             text-align: center;
@@ -53,10 +52,10 @@
         }
         #dayCounter {
             font-size: 1.2em;
-            color: white; /*  Белый цвет для счетчика дней */
+            color: white;
             margin-top: 20px;
         }
-        /* Стили для плеера */
+
         .music-player {
             margin-top: 30px;
             text-align: center;
@@ -76,7 +75,7 @@
             background-color: #6a1b9a;
         }
 
-        #birthdayCountdown { /* Стиль для таймера ДР */
+        #birthdayCountdown {
             font-size: 1.5em;
             color: white;
             margin-top: 20px;
@@ -91,7 +90,7 @@
             <button id="noBtn">НЕТ</button>
         </div>
         <p id="dayCounter">Люблю Лину: День 1</p>
-        <p id="birthdayCountdown"></p> <!-- Добавили элемент для таймера ДР -->
+        <p id="birthdayCountdown"></p>
     </div>
 
     <div class="music-player">
@@ -111,7 +110,7 @@
 
         function updateDayCounter() {
             let today = new Date();
-            let startDate = new Date(today.getFullYear(), today.getMonth(), today.getDate()); // Start of current day
+            let startDate = new Date(today.getFullYear(), today.getMonth(), today.getDate());
 
             let diffInMs = today.getTime() - startDate.getTime();
             let diffInDays = Math.floor(diffInMs / (1000 * 60 * 60 * 24)) + 1;
@@ -120,38 +119,29 @@
         }
 
         function updateBirthdayCountdown() {
-            // Дата рождения (замените на реальную дату)
-            const birthday = new Date("2009-07-12T00:00:00"); // Дата рождения в формате YYYY-MM-DDTHH:mm:ss
-
-            // Текущая дата и время
+            const birthday = new Date("2025-07-12T00:00:00"); // Дата рождения Лины
             const now = new Date();
 
-            // Разница между датами в миллисекундах
             let diff = birthday.getTime() - now.getTime();
 
-            // Если день рождения уже прошел в этом году, считаем до следующего года
             if (diff < 0) {
-                birthday.setFullYear(birthday.getFullYear() + 1);
+                birthday.setFullYear(birthday.getFullYear() + 1); // Переход на следующий год, если ДР уже прошел
                 diff = birthday.getTime() - now.getTime();
             }
 
-            // Расчет оставшихся дней, часов, минут и секунд
             const days = Math.floor(diff / (1000 * 60 * 60 * 24));
             const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
             const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
             const seconds = Math.floor((diff % (1000 * 60)) / 1000);
 
-            // Вывод результата на страницу
-            document.getElementById("birthdayCountdown").innerHTML = `До дня рождения Лины осталось: ${days} дней, ${hours} часов, ${minutes} минут, ${seconds} секунд`;
+            document.getElementById("birthdayCountdown").innerHTML = `С др, любимая, до даты этой осталось: ${days} дней, ${hours} часов, ${minutes} минут, ${seconds} секунд`;
         }
 
         updateDayCounter();
 
-        // Обновление счетчика ДР каждую секунду
         setInterval(updateBirthdayCountdown, 1000);
-        updateBirthdayCountdown(); // Initial call to set the initial countdown
+        updateBirthdayCountdown();
 
-        // Музыкальный плеер
         let audio = document.getElementById('myAudio');
         let playBtn = document.getElementById('playBtn');
         let pauseBtn = document.getElementById('pauseBtn');
