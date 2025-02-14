@@ -10,13 +10,13 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            /* Old browsers */
             background: url("akasa.png") no-repeat center center fixed;
             -webkit-background-size: cover;
             -moz-background-size: cover;
             -o-background-size: cover;
-            background-size: cover; /* Modern browsers */
+            background-size: cover;
             font-family: 'Arial', sans-serif;
+            color: white;
         }
         .container {
             text-align: center;
@@ -52,10 +52,10 @@
         }
         #dayCounter {
             font-size: 1.2em;
-            color: #757575;
+            color: white;
             margin-top: 20px;
         }
-        /* Стили для плеера */
+
         .music-player {
             margin-top: 30px;
             text-align: center;
@@ -74,6 +74,12 @@
         .music-player button:hover {
             background-color: #6a1b9a;
         }
+
+        #birthdayCountdown {
+            font-size: 1.5em;
+            color: white;
+            margin-top: 20px;
+        }
     </style>
 </head>
 <body>
@@ -84,6 +90,7 @@
             <button id="noBtn">НЕТ</button>
         </div>
         <p id="dayCounter">Люблю Лину: День 1</p>
+        <p id="birthdayCountdown"></p>
     </div>
 
     <div class="music-player">
@@ -103,7 +110,7 @@
 
         function updateDayCounter() {
             let today = new Date();
-            let startDate = new Date(today.getFullYear(), today.getMonth(), today.getDate()); // Start of current day
+            let startDate = new Date(today.getFullYear(), today.getMonth(), today.getDate());
 
             let diffInMs = today.getTime() - startDate.getTime();
             let diffInDays = Math.floor(diffInMs / (1000 * 60 * 60 * 24)) + 1;
@@ -111,9 +118,30 @@
             document.getElementById('dayCounter').textContent = `Люблю Лину: День ${diffInDays}`;
         }
 
+        function updateBirthdayCountdown() {
+            const birthday = new Date("2025-07-12T00:00:00"); // Дата рождения Лины
+            const now = new Date();
+
+            let diff = birthday.getTime() - now.getTime();
+
+            if (diff < 0) {
+                birthday.setFullYear(birthday.getFullYear() + 1); // Переход на следующий год, если ДР уже прошел
+                diff = birthday.getTime() - now.getTime();
+            }
+
+            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+            document.getElementById("birthdayCountdown").innerHTML = `до даты этой осталось: ${days} дней, ${hours} часов, ${minutes} минут, ${seconds} секунд`;
+        }
+
         updateDayCounter();
 
-        // Музыкальный плеер
+        setInterval(updateBirthdayCountdown, 1000);
+        updateBirthdayCountdown();
+
         let audio = document.getElementById('myAudio');
         let playBtn = document.getElementById('playBtn');
         let pauseBtn = document.getElementById('pauseBtn');
