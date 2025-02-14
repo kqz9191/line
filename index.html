@@ -10,11 +10,21 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            background: #ffebee;
+            /* Добавляем фоновое изображение */
+            background-image: url('akasa.png');
+            background-size: cover; /* Растягиваем изображение на весь фон */
+            background-repeat: no-repeat; /* Запрещаем повторение изображения */
+            background-position: center center; /* Центрируем изображение */
+            background-attachment: fixed; /* Фиксируем изображение при прокрутке */
             font-family: 'Arial', sans-serif;
+            color: #fff; /* Меняем цвет текста, чтобы он был виден на фоне */
         }
         .container {
             text-align: center;
+            /* Добавляем полупрозрачный фон для лучшей читаемости текста */
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 30px;
+            border-radius: 10px;
         }
         h1 {
             color: #d32f2f;
@@ -54,6 +64,10 @@
         .music-player {
             margin-top: 30px;
             text-align: center;
+             /* Добавляем полупрозрачный фон для лучшей читаемости текста */
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 30px;
+            border-radius: 10px;
         }
         .music-player button {
             padding: 10px 20px;
