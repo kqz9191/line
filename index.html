@@ -17,6 +17,7 @@
             -o-background-size: cover;
             background-size: cover; /* Modern browsers */
             font-family: 'Arial', sans-serif;
+            color: white; /*  Установили белый цвет текста для всего body */
         }
         .container {
             text-align: center;
@@ -52,7 +53,7 @@
         }
         #dayCounter {
             font-size: 1.2em;
-            color: #757575;
+            color: white; /*  Белый цвет для счетчика дней */
             margin-top: 20px;
         }
         /* Стили для плеера */
@@ -74,6 +75,12 @@
         .music-player button:hover {
             background-color: #6a1b9a;
         }
+
+        #birthdayCountdown { /* Стиль для таймера ДР */
+            font-size: 1.5em;
+            color: white;
+            margin-top: 20px;
+        }
     </style>
 </head>
 <body>
@@ -84,6 +91,7 @@
             <button id="noBtn">НЕТ</button>
         </div>
         <p id="dayCounter">Люблю Лину: День 1</p>
+        <p id="birthdayCountdown"></p> <!-- Добавили элемент для таймера ДР -->
     </div>
 
     <div class="music-player">
@@ -111,7 +119,37 @@
             document.getElementById('dayCounter').textContent = `Люблю Лину: День ${diffInDays}`;
         }
 
+        function updateBirthdayCountdown() {
+            // Дата рождения (замените на реальную дату)
+            const birthday = new Date("2025-03-15T00:00:00"); // Дата рождения в формате YYYY-MM-DDTHH:mm:ss
+
+            // Текущая дата и время
+            const now = new Date();
+
+            // Разница между датами в миллисекундах
+            let diff = birthday.getTime() - now.getTime();
+
+            // Если день рождения уже прошел в этом году, считаем до следующего года
+            if (diff < 0) {
+                birthday.setFullYear(birthday.getFullYear() + 1);
+                diff = birthday.getTime() - now.getTime();
+            }
+
+            // Расчет оставшихся дней, часов, минут и секунд
+            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+            // Вывод результата на страницу
+            document.getElementById("birthdayCountdown").innerHTML = `До дня рождения Лины осталось: ${days} дней, ${hours} часов, ${minutes} минут, ${seconds} секунд`;
+        }
+
         updateDayCounter();
+
+        // Обновление счетчика ДР каждую секунду
+        setInterval(updateBirthdayCountdown, 1000);
+        updateBirthdayCountdown(); // Initial call to set the initial countdown
 
         // Музыкальный плеер
         let audio = document.getElementById('myAudio');
