@@ -10,21 +10,16 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            /* Добавляем фоновое изображение */
-            background-image: url('akasa.png');
-            background-size: cover; /* Растягиваем изображение на весь фон */
-            background-repeat: no-repeat; /* Запрещаем повторение изображения */
-            background-position: center center; /* Центрируем изображение */
-            background-attachment: fixed; /* Фиксируем изображение при прокрутке */
+            /* Old browsers */
+            background: url("akasa.png") no-repeat center center fixed;
+            -webkit-background-size: cover;
+            -moz-background-size: cover;
+            -o-background-size: cover;
+            background-size: cover; /* Modern browsers */
             font-family: 'Arial', sans-serif;
-            color: #fff; /* Меняем цвет текста, чтобы он был виден на фоне */
         }
         .container {
             text-align: center;
-            /* Добавляем полупрозрачный фон для лучшей читаемости текста */
-            background-color: rgba(255, 255, 255, 0.1);
-            padding: 30px;
-            border-radius: 10px;
         }
         h1 {
             color: #d32f2f;
@@ -64,10 +59,6 @@
         .music-player {
             margin-top: 30px;
             text-align: center;
-             /* Добавляем полупрозрачный фон для лучшей читаемости текста */
-            background-color: rgba(255, 255, 255, 0.1);
-            padding: 30px;
-            border-radius: 10px;
         }
         .music-player button {
             padding: 10px 20px;
@@ -82,16 +73,6 @@
 
         .music-player button:hover {
             background-color: #6a1b9a;
-        }
-
-        #seekSlider {
-            width: 80%; /* Adjust width as needed */
-            margin-bottom: 10px;
-        }
-
-        #timeDisplay {
-            font-size: 0.9em;
-            color: #757575;
         }
     </style>
 </head>
@@ -109,8 +90,6 @@
         <audio id="myAudio" src="ogni.mp3"></audio>
         <button id="playBtn">Play</button>
         <button id="pauseBtn">Pause</button>
-        <input type="range" id="seekSlider" min="0" max="100" value="0">
-        <div id="timeDisplay">0:00 / 0:00</div>
     </div>
 
     <script>
@@ -138,30 +117,6 @@
         let audio = document.getElementById('myAudio');
         let playBtn = document.getElementById('playBtn');
         let pauseBtn = document.getElementById('pauseBtn');
-        const seekSlider = document.getElementById('seekSlider');
-        const timeDisplay = document.getElementById('timeDisplay');
-
-        function formatTime(seconds) {
-            const mins = Math.floor(seconds / 60);
-            const secs = Math.floor(seconds % 60).toString().padStart(2, '0');
-            return `${mins}:${secs}`;
-        }
-
-
-        audio.addEventListener('loadedmetadata', () => {
-            seekSlider.max = audio.duration;
-            timeDisplay.textContent = `0:00 / ${formatTime(audio.duration)}`;
-        });
-
-        audio.addEventListener('timeupdate', () => {
-            seekSlider.value = audio.currentTime;
-            timeDisplay.textContent = `${formatTime(audio.currentTime)} / ${formatTime(audio.duration)}`;
-        });
-
-
-        seekSlider.addEventListener('input', () => {
-            audio.currentTime = seekSlider.value;
-        });
 
         playBtn.addEventListener('click', () => {
             audio.play();
@@ -170,8 +125,6 @@
         pauseBtn.addEventListener('click', () => {
             audio.pause();
         });
-
-
     </script>
 </body>
 </html>
