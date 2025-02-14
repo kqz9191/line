@@ -50,6 +50,25 @@
             color: #757575;
             margin-top: 20px;
         }
+        /* Стили для плеера */
+        .music-player {
+            margin-top: 30px;
+            text-align: center;
+        }
+        .music-player button {
+            padding: 10px 20px;
+            font-size: 1em;
+            border-radius: 5px;
+            background: #8e24aa;
+            color: white;
+            cursor: pointer;
+            border: none;
+            transition: background-color 0.3s;
+        }
+
+        .music-player button:hover {
+            background-color: #6a1b9a;
+        }
     </style>
 </head>
 <body>
@@ -60,6 +79,12 @@
             <button id="noBtn">НЕТ</button>
         </div>
         <p id="dayCounter">Люблю Лину: День 1</p>
+    </div>
+
+    <div class="music-player">
+        <audio id="myAudio" src="ogni.mp3"></audio>
+        <button id="playBtn">Play</button>
+        <button id="pauseBtn">Pause</button>
     </div>
 
     <script>
@@ -82,6 +107,19 @@
         }
 
         updateDayCounter();
+
+        // Музыкальный плеер
+        let audio = document.getElementById('myAudio');
+        let playBtn = document.getElementById('playBtn');
+        let pauseBtn = document.getElementById('pauseBtn');
+
+        playBtn.addEventListener('click', () => {
+            audio.play();
+        });
+
+        pauseBtn.addEventListener('click', () => {
+            audio.pause();
+        });
     </script>
 </body>
 </html>
