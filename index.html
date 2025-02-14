@@ -10,13 +10,13 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            background: url("akasa.png") no-repeat center center fixed;
+            /* Old browsers */
+            background: url("anasa.png") no-repeat center center fixed;
             -webkit-background-size: cover;
             -moz-background-size: cover;
             -o-background-size: cover;
-            background-size: cover;
+            background-size: cover; /* Modern browsers */
             font-family: 'Arial', sans-serif;
-            color: white;
         }
         .container {
             text-align: center;
@@ -52,14 +52,82 @@
         }
         #dayCounter {
             font-size: 1.2em;
-            color: white;
+            color: #757575;
             margin-top: 20px;
         }
-
+        /* Стили для плеера */
         .music-player {
             margin-top: 30px;
             text-align: center;
         }
+        .music-player button {
+            padding: 10px 20px;
+            font-size: 1em;
+            border-radius: 5px;
+            background: #8e24aa;
+            color: white;
+            cursor: pointer;
+            border: none;
+            transition: background-color 0.3s;
+        }
+
+        .music-player button:hover {
+            background-color: #6a1b9a;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>я тебя люблю</h1>
+        <div class="buttons">
+            <button id="yesBtn">ДА</button>
+            <button id="noBtn">НЕТ</button>
+        </div>
+        <p id="dayCounter">Люблю Лину: День 1</p>
+    </div>
+
+    <div class="music-player">
+        <audio id="myAudio" src="ogni.mp3"></audio>
+        <button id="playBtn">Play</button>
+        <button id="pauseBtn">Pause</button>
+    </div>
+
+    <script>
+        document.getElementById('yesBtn').onclick = () => {
+            window.location.href = 'valentine.html';
+        };
+
+        document.getElementById('noBtn').onclick = () => {
+            window.location.href = '404.html';
+        };
+
+        function updateDayCounter() {
+            let today = new Date();
+            let startDate = new Date(today.getFullYear(), today.getMonth(), today.getDate()); // Start of current day
+
+            let diffInMs = today.getTime() - startDate.getTime();
+            let diffInDays = Math.floor(diffInMs / (1000 * 60 * 60 * 24)) + 1;
+
+            document.getElementById('dayCounter').textContent = `Люблю Лину: День ${diffInDays}`;
+        }
+
+        updateDayCounter();
+
+        // Музыкальный плеер
+        let audio = document.getElementById('myAudio');
+        let playBtn = document.getElementById('playBtn');
+        let pauseBtn = document.getElementById('pauseBtn');
+
+        playBtn.addEventListener('click', () => {
+            audio.play();
+        });
+
+        pauseBtn.addEventListener('click', () => {
+            audio.pause();
+        });
+    </script>
+</body>
+</html>        }
         .music-player button {
             padding: 10px 20px;
             font-size: 1em;
