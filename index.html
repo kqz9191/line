@@ -5,13 +5,14 @@
     <title>Вопрос</title>
     <style>
         @keyframes rainbow {
-            0% { color: red; }
-            16% { color: orange; }
-            32% { color: yellow; }
-            48% { color: green; }
-            64% { color: blue; }
-            80% { color: indigo; }
-            100% { color: violet; }
+            0% { color: hsl(0, 100%, 50%); } /* Красный */
+            14% { color: hsl(60, 100%, 50%); } /* Желтый */
+            28% { color: hsl(120, 100%, 50%); } /* Зеленый */
+            42% { color: hsl(180, 100%, 50%); } /* Бирюзовый */
+            57% { color: hsl(240, 100%, 50%); } /* Синий */
+            71% { color: hsl(300, 100%, 50%); } /* Пурпурный */
+            85% { color: hsl(360, 100%, 50%); } /* Красный */
+            100% { color: hsl(0, 100%, 50%); } /* Красный */
         }
         body {
             margin: 0;
@@ -25,16 +26,148 @@
             -o-background-size: cover;
             background-size: cover;
             font-family: 'Arial', sans-serif;
-            color: white;
-            animation: rainbow 5s infinite linear;
+            color: white; /* Цвет будет перезаписан анимацией для текста */
+            animation: rainbow 5s infinite linear; /* Запускаем анимацию для всего текста в body */
         }
         .container {
             text-align: center;
         }
         h1 {
-            color: #d32f2f;
             font-size: 3em;
             margin-bottom: 40px;
+            /* Убираем цвет, т.к. он задается анимацией body */
+        }
+        .buttons {
+            display: flex;
+            gap: 30px;
+            justify-content: center;
+        }
+        button {
+            padding: 15px 40px;
+            font-size: 1.5em;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: transform 0.3s;
+            /* Убираем цвет, т.к. он задается анимацией body */
+        }
+        #yesBtn {
+            background: #4CAF50;
+            color: white;
+        }
+        #noBtn {
+            background: #f44336;
+            color: white;
+        }
+        button:hover {
+            transform: scale(1.1);
+        }
+        #dayCounter {
+            font-size: 1.2em;
+            margin-top: 20px;
+            /* Убираем цвет, т.к. он задается анимацией body */
+        }
+        .music-player {
+            margin-top: 30px;
+            text-align: center;
+        }
+        .music-player button {
+            padding: 10px 20px;
+            font-size: 1em;
+            border-radius: 5px;
+            background: #8e24aa;
+            color: white;
+            cursor: pointer;
+            border: none;
+            transition: background-color 0.3s;
+            /* Убираем цвет, т.к. он задается анимацией body */
+        }
+        .music-player button:hover {
+            background-color: #6a1b9a;
+        }
+        .volume-slider, .seek-bar {
+            margin-top: 10px;
+        }
+        #birthdayCountdown {
+            font-size: 1.5em;
+            margin-top: 20px;
+            /* Убираем цвет, т.к. он задается анимацией body */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>я тебя люблю</h1>
+        <div class="buttons">
+            <button id="yesBtn">ДА</button>
+            <button id="noBtn">НЕТ</button>
+        </div>
+        <p id="dayCounter">Люблю Лину: День 1</p>
+        <p id="birthdayCountdown"></p>
+    </div>
+    <div class="music-player">
+        <audio id="myAudio" src="ogni.mp3"></audio>
+        <button id="playBtn">Play</button>
+        <button id="pauseBtn">Pause</button>
+        <input type="range" id="volumeSlider" class="volume-slider" min="0" max="1" step="0.01" value="1">
+        <input type="range" id="seekBar" class="seek-bar" min="0" max="100" step="1" value="0">
+    </div>
+    <script>
+        document.getElementById('yesBtn').onclick = () => {
+            window.location.href = 'valentine.html';
+        };
+        document.getElementById('noBtn').onclick = () => {
+            window.location.href = '404.html';
+        };
+        function updateDayCounter() {
+            let today = new Date();
+            let startDate = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+            let diffInMs = today.getTime() - startDate.getTime();
+            let diffInDays = Math.floor(diffInMs / (1000 * 60 * 60 * 24)) + 1;
+            document.getElementById('dayCounter').textContent = `Люблю Лину: День ${diffInDays}`;
+        }
+        function updateBirthdayCountdown() {
+            const birthday = new Date("2025-07-12T00:00:00");
+            const now = new Date();
+            let diff = birthday.getTime() - now.getTime();
+            if (diff < 0) {
+                birthday.setFullYear(birthday.getFullYear() + 1);
+                diff = birthday.getTime() - now.getTime();
+            }
+            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+            document.getElementById("birthdayCountdown").innerHTML = `к твоему дню рождения осталось: ${days} дней, ${hours} часов, ${minutes} минут, ${seconds} секунд`;
+        }
+        updateDayCounter();
+        setInterval(updateBirthdayCountdown, 1000);
+        updateBirthdayCountdown();
+        let audio = document.getElementById('myAudio');
+        let playBtn = document.getElementById('playBtn');
+        let pauseBtn = document.getElementById('pauseBtn');
+        let volumeSlider = document.getElementById('volumeSlider');
+        let seekBar = document.getElementById('seekBar');
+        playBtn.addEventListener('click', () => {
+            audio.play();
+        });
+        pauseBtn.addEventListener('click', () => {
+            audio.pause();
+        });
+        volumeSlider.addEventListener('input', () => {
+            audio.volume = volumeSlider.value;
+        });
+        seekBar.addEventListener('input', () => {
+            let seekTo = audio.duration * (seekBar.value / 100);
+            audio.currentTime = seekTo;
+        });
+        audio.addEventListener('timeupdate', () => {
+            let value = (audio.currentTime / audio.duration) * 100;
+            seekBar.value = value;
+        });
+    </script>
+</body>
+</html>            margin-bottom: 40px;
         }
         .buttons {
             display: flex;
