@@ -161,9 +161,11 @@
 
         // Счетчик дней
         function updateDayCounter() {
-            const startDate = new Date('2024-01-01'); // Начальная дата
+            const moscowOffset = 3 * 60; // Offset in minutes for Moscow time (UTC+3)
             const today = new Date();
-            const diffInMs = today.getTime() - startDate.getTime();
+            const moscowTime = new Date(today.getTime() + (today.getTimezoneOffset() + moscowOffset) * 60000);
+            const startDate = new Date('2025-02-15'); // Начальная дата
+            const diffInMs = moscowTime.getTime() - startDate.getTime();
             const diffInDays = Math.floor(diffInMs / (1000 * 60 * 60 * 24)) + 1;
             document.getElementById('dayCounter').textContent = `Люблю Лину: День ${diffInDays}`;
         }
@@ -191,6 +193,17 @@
         updateDayCounter();
         updateBirthdayCountdown();
         setInterval(updateBirthdayCountdown, 1000);
+
+        // Обновление счетчика дней в полночь по МСК
+        function checkMidnight() {
+            const now = new Date();
+            const moscowOffset = 3 * 60; // Offset in minutes for Moscow time (UTC+3)
+            const moscowTime = new Date(now.getTime() + (now.getTimezoneOffset() + moscowOffset) * 60000);
+            if (moscowTime.getHours() === 0 && moscowTime.getMinutes() === 0) {
+                updateDayCounter();
+            }
+        }
+        setInterval(checkMidnight, 60000); // Проверка каждую минуту
 
         // Музыкальный плеер
         const audio = document.getElementById('myAudio');
