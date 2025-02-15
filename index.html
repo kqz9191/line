@@ -4,6 +4,15 @@
     <meta charset="UTF-8">
     <title>Вопрос</title>
     <style>
+        @keyframes rainbow {
+            0% { color: red; }
+            16% { color: orange; }
+            32% { color: yellow; }
+            48% { color: green; }
+            64% { color: blue; }
+            80% { color: indigo; }
+            100% { color: violet; }
+        }
         body {
             margin: 0;
             min-height: 100vh;
@@ -17,6 +26,7 @@
             background-size: cover;
             font-family: 'Arial', sans-serif;
             color: white;
+            animation: rainbow 5s infinite linear;
         }
         .container {
             text-align: center;
